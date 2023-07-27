@@ -1,0 +1,30 @@
+<div class="col-lg-4 col-md-12">
+    <image src="{{profile.image.url}}" class="img-profile">
+        <h3>{{profile.full_name}}</h3>
+</div>
+<div class="col-lg-8 col-md-12" >
+   <div class="profile-item">
+        <p>Full name:</p>
+        <input class="profile-input" type="text" id="full-name" value="{{profile.full_name}}">
+   </div> 
+   <div class="profile-item">
+        <p>Bio:</p>
+        <input class="profile-input" type="text" id="bio" value="{{profile.bio}}">
+    </div>
+   <div class="profile-item">
+        <p>Email:</p>
+        <input class="profile-input" type="text" id="email" value="{{profile.user.email}}">
+    </div>
+    <div class="profile-item">
+        <p>Phone:</p>
+        <input class="profile-input" type="text" id="phone" value="{{profile.phone}}">
+    </div>
+    <div class="profile-item">
+        <p>Image:</p>
+        <input type="file" id="img-choice"></input>
+    </div>
+    <div class="profile-item">
+        <p></p>
+        <button id="save_profile" onClick="save_profile()">Save</button>
+    </div>
+</div>

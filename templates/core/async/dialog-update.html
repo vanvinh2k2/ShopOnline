@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-add-cart">Update Address</h5>
+  </div>
+  <div class="modal-body">
+      <div class="address-item">
+          <p class="top">Display Name<span>*</span></p>
+          <input class="address-input" type="text" value="{{address.display_name}}" id="display-name-update">
+      </div>
+      <div class="address-item">
+          <p>Phone<span>*</span></p>
+          <input class="address-input" type="text" value="{{address.mobile}}" id="phone-update">
+      </div>
+      <div class="address-item">
+          <p>Address<span>*</span></p>
+          <input class="address-input" type="text" value="{{address.address}}" id="address-update">
+      </div>
+      <div class="address-item">
+          <p id="notify-error-update"></p>
+      </div>
+  </div> 
+  <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Back</button>
+      <button type="button" class="btn btn-primary" id="update-address" data-address-id="{{address.id}}" onClick="update_address()">Confirm</button>
+  </div>

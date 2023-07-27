@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <div class="content">
+                    <span class="title">Create an Account</span>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="item">
+                            <p>Full name</p>
+                            <input placeholder="Name">
+                        </div>
+                        <div class="item">
+                            <p>Email</p>
+                            <input placeholder="Name">
+                        </div>
+                        <div class="item">
+                            <p>Phone</p>
+                            <input placeholder="Name">
+                        </div>
+                        <div class="item">
+                            <p>Subject</p>
+                            <input placeholder="Name">
+                        </div>
+                        <div class="item">
+                            <p>Message</p>
+                            <input placeholder="Name">
+                        </div>
+                        <button type="submit">Register</button>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% extends 'core/base.html' %}
+{%load static%}
+
+{% block content %}
+<section class="dashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>My Account</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-4">
+                <div class="dashboard-menu">
+                    <ul class="tab-header">
+                        <li><a href="{% url 'core:dashboard' %}"><i class="fas fa-tachometer-alt-average"></i>My Profile</a></li>
+                        <li name="tab-2" onClick="tabClick(this)" class="active"><a><i class="fas fa-sort-alpha-down"></i>Orders Detail</a></li>
+                        <li><a href="{% url 'userauths:logout' %}"><i class="fas fa-sign-out"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8">
+                <div class="dashboard-content">
+                    <div id="tab-2" class="tab active">
+                        <h3>Your Orders</h3>
+                        <hr>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Orders Item</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for oi in order_items %}
+                                <tr>
+                                    <td>NO-ITEM-{{oi.id}}</td>
+                                    <td>
+                                        <image src="{{oi.image}}">
+                                    </td>
+                                    <td><span>{{oi.item}}</span></td>
+                                    <td>${{oi.price}}</td>
+                                    <td>{{oi.quantity}}</td>
+                                    <td><span>${{oi.total}}</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-12">
+                <div class="section-title">
+                    <h3>Product Hot</h3>
+                </div>
+            </div>
+            {% for product in products %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix {{ product.category.title }}">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="{{ product.image.url }}">
+                                <ul class="featured__item__pic__hover">
+                                    <li><a data-product-item="{{product.id}}" onClick="add_wishlish(this)"><i class="fa fa-heart"></i></a></li> 
+                                    <li><a href="{% url 'core:product-detail' product.pid %}"><i class="fa fa-eye"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="#">{{ product.title }}</a></h6>
+                                <div class="featured__item__rate">
+                                    <span>Rate: </span>
+                                    <div class="featured__item__rate-content">
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <span>(3.5)</span>
+                                    </div>
+                                </div>
+                                <div class="featured__item__weight">
+                                    <p>By: </p>
+                                    <p>{{ product.vendor.title}}</p>
+                                </div>
+                                <div class="featured__item__price">
+                                    <span>Price: </span>
+                                    <div class="featured__item__price-content">
+                                        <p class="product__details__price-{{product.id}}" value="{{product.price}}" style="color: rgb(6, 120, 82); font-size: 18px;">{{ product.price }}</p>
+                                        <p style="text-decoration:line-through;">{{ product.old_price }}</p>
+                                    </div>
+                                </div>
+                                <input type="text" hidden=true value="1" class="product-quantity-{{product.id}}">
+                                <input type="text" hidden=true value="{{ product.pid }}" class="product-pid-{{product.id}}">
+                                <input type="text" hidden=true value="{{ product.image.url }}" class="product-image-{{product.id}}">
+                                <input type="text" hidden=true value="{{ product.id }}" class="product-id-{{product.id}}">
+                                <input type="text" hidden=true value="{{ product.title }}" class="product-title-{{product.id}}">
+                                <button data-index="{{ product.id }}" class="btn-add-cart"><i class="fa fa-shopping-cart"></i>Add</button>
+                            </div>
+                            <div class="featured__item__sale">
+                                <span class="title">Sale</span>
+                                <span>{{ product.get_precentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

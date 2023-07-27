@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class="signup">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 col-md-12">
+                <div class="login-img">
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 col-md-12">
+                <div class="content">
+                    <span class="title">Sign in Account</span>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="item">
+                            <p>Email</p>
+                            <input type="text" placeholder="Input your email" name="email">
+                        </div>
+                        <div class="item">
+                            <p>Password</p>
+                            <input type="password" placeholder="Input your password" name="password">
+                        </div>
+                        <div class="item2">
+                            <div class="remember">
+                                <input class="check" type="checkbox" id="remember-password">
+                                <label for="remember-password">Remember password</label>
+                            </div>
+                            <a href="#">Forgot password?</a>
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                    <div class="login">
+                        <span>Don't have an Account?</span>
+                        <a href="{% url 'userauths:register' %}">Sign up</a>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    
+   
+    
+</div>
+{% endblock content %}
+

@@ -1,0 +1,292 @@
+{% extends 'core/base.html'%}
+{% load static %}
+
+{% block content %}
+<!-- Product Details Section Begin -->
+<section class="product-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h3>Detail Product</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large" src="{{ productdetail.image.url }}">
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        {% for productImage in productImages %}
+                        <img data-imgbigurl="{{productImage.images.url}}"
+                            src="{{productImage.images.url}}" alt="">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>{{productdetail.title}}</h3>
+                    <div class="product-infor">
+                        <div class="product-evaluate">
+                            <b>Evaluate:</b> 10k
+                        </div>
+                        <div class="seperate"></div>
+                        <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(4.1)</span>
+                        </div>
+                        <div class="seperate"></div>
+                        <div class="product-solid">
+                            Soled: 1.2k
+                        </div>
+                    </div>
+                    <div class="product-like"><b>Liked:</b> 10 <i class="fa fa-heart"></i></div>
+                    <div class="product__details__price product__details__price-{{ productdetail.id }}" value="{{productdetail.price}}">$ {{productdetail.price}}</div>
+                    <div class="product__details__quantity">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="text" value="1" class="product-quantity-{{productdetail.id}}">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" hidden=true value="{{ productdetail.id }}" class="product-id-{{ productdetail.id }}">
+                    <input type="text" hidden=true value="{{ productdetail.image.url }}" class="product-image-{{ productdetail.id }}">
+                    <input type="text" hidden=true value="{{ productdetail.title }}" class="product-title-{{ productdetail.id }}">
+                    <input type="text" hidden=true value="{{ productdetail.pid }}" class="product-pid-{{ productdetail.id }}">
+                    <br>
+                    <a href="#" data-index="{{ productdetail.id }}" class="primary-btn btn-add-cart" >Add to Cart</a>
+                    <a href="#" class="primary-btn">Now Buy</a>
+                    <ul>
+                        <li><b>Sku</b> <span>{{productdetail.sku}}</span></li>
+                        <li><b>Type</b> <span>{{productdetail.mfd}}</span></li>
+                        <li><b>Life</b> <span>{{productdetail.life}}</span></li>
+                        <li><b>Stock</b> <span>{{productdetail.stock}} items in Stock</span></li>
+                        <li><b>Tags</b> <span>
+                            <a href="#">
+                                {% for tag in productdetail.tags.all %}
+                                <a href="{% url 'core:tag' tag.slug %}">#{{tag}}</a>
+                                {% endfor %}
+                            </a>
+                        </span></li>
+                        <li><b>Share on</b>
+                            <div class="share">
+                                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+
+<div class="container">
+    <div class="hero">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="banner-vendor2">
+                    <div class="vendor-header">
+                        <img src="{{vendor.image.url}}"/>
+                        <div class="vendor-content">
+                            <h3>{{vendor.title}}</h3>
+                            <div class="featured__item__rate">
+                                <span>Rate: </span>
+                                <div class="featured__item__rate-content">
+                                    <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                    <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                    <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <span>(3.5)</span>
+                                </div>
+                            </div>
+                            <div class="featured__item__contact">
+                                <span><i class="fa-sharp fa-solid fa-location-dot"></i>Address:</span>
+                                <p>{{vendor.address}}</p>
+                            </div>
+                            <div class="featured__item__contact">
+                                <span><i class="fa-solid fa-phone"></i>Phone:</span>
+                                <p>{{vendor.contact}}</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="vendor-contact">
+                        <div class="follow">
+                            <p>Rating: 92%</p>
+                            <p>Ship on time: 100%</p>
+                            <p>Chat response: 80%</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'core:vendor-detail' vendor.vid %}"><button class="visist">Visit<i class="fa-solid fa-arrow-right"></i></button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="description-product">
+                <h3>Information Product</h3>
+                <p>{{productdetail.description | safe}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="description_view col-lg-7">
+            <h3>Cutommer Questions & Answers </h3>
+            <div class="review">
+                <p class="review-sum">Have {{reviews.count}} reviews for this product.</p>
+                {% for review in reviews %}
+                <div class="review-chat">
+                    <img src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg"/>
+                    <div class="chat-content">
+                        <p>{{review.user.username}}</p>
+                        {% for i in review.rating|ljust:review.rating %}
+                        <i class="fas fa-star text-warning"></i>
+                        {% endfor %}
+                        <p>{{review.date}}</p>
+                        <p>{{review.review}}</p>
+                    </div>
+                </div>
+                <div class="view"></div>
+                {% endfor %}
+                {% if make_review == True %}
+                {% if request.user.is_authenticated %}
+                <p class="title-addreview" id="title-res">Add a review</p>
+                <div class="addview-content">
+                    <div class="review-rating" id="rate-res">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <form action="{% url 'core:add-review' productdetail.pid %}" method="post" id="commentForm">
+                        {% csrf_token %}
+                        {{forms.review}}
+                        {{forms.rating}}
+                        <button type="submit" class="primary-btn">Submit review</button> 
+                    </form>
+                </div>
+                {% endif %}
+                {% elif make_review == False %}
+                <b class="text-success" id="review-res">Review added</b>
+                {% endif %}
+            </div>
+        </div>
+        <div class="description_chart col-lg-5">
+            <h3>Cutommer Reviews</h3>
+            <div class="product__details__rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <span>({{avg_rate.rating}})</span>
+            </div>
+            <div class="review-chart">
+                <div class="progress">
+                    <div class="progress-bar">5 Star</div>
+                    <div class="progress-chart">
+                        <span class="progress-text" style="width: 80%;">10%</span>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar">4 Star</div>
+                    <div class="progress-chart">
+                        <span class="progress-text" style="width: 10%;">10%</span>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar">3 Star</div>
+                    <div class="progress-chart">
+                        <span class="progress-text" style="width: 50%;">10%</span>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar">2 Star</div>
+                    <div class="progress-chart">
+                        <span class="progress-text" style="width: 90%;">10%</span>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar">1 Star</div>
+                    <div class="progress-chart">
+                        <span class="progress-text" style="width: 60%;">10%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Related Product Section Begin -->
+<section class="related-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h3>Shop's products</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for product in products %}
+                       <div class="col-lg-3 col-md-4 col-sm-6 mix">
+                            <div class="featured__item">
+                                <div class="featured__item__pic set-bg" data-setbg="{{ product.image.url }}">
+                                    <ul class="featured__item__pic__hover">
+                                        <li><a data-product-item="{{product.id}}" onClick="add_wishlish(this)"><i class="fa fa-heart"></i></a></li> 
+                                        <li><a href="{% url 'core:product-detail' product.pid %}"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="featured__item__text">
+                                    <h6><a href="#">{{ product.title }}</a></h6>
+                                    <div class="featured__item__rate">
+                                        <span>Rate: </span>
+                                        <div class="featured__item__rate-content">
+                                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <span>(3.5)</span>
+                                        </div>
+                                    </div>
+                                    <div class="featured__item__weight">
+                                        <p>By: </p>
+                                        <p>{{ product.vendor.title}}</p>
+                                    </div>
+                                    <div class="featured__item__price">
+                                        <span>Price: </span>
+                                        <div class="featured__item__price-content">
+                                            <p style="color: rgb(6, 120, 82); font-size: 18px;">{{ product.price }}</p>
+                                            <p style="text-decoration:line-through;">{{ product.old_price }}</p>
+                                        </div>
+                                    </div>
+                                    <button><i class="fa fa-shopping-cart"></i>Add</button>
+                                </div>
+                                <div class="featured__item__sale">
+                                    <span class="title">New</span>
+                                </div>
+                            </div>
+                        </div>
+                       {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Related Product Section End -->
+{% endblock content %}
+

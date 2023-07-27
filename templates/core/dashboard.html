@@ -1,0 +1,211 @@
+{% extends 'core/base.html' %}
+{%load static%}
+
+{% block content %}
+<section class="dashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>My Account</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-4">
+                <div class="dashboard-menu">
+                    <ul class="tab-header">
+                        <li name="tab-0" onClick="tabClick(this)" class="active"><a><i class="fas fa-user-circle"></i>Profile</a></li>
+                        <li name="tab-1" onClick="tabClick(this)"><a><i class="fas fa-tachometer-alt-average"></i>Dashboard</a></li>
+                        <li name="tab-2" onClick="tabClick(this)"><a><i class="fas fa-sort-alpha-down"></i>Orders</a></li>
+                        <li name="tab-3" onClick="tabClick(this)"><a><i class="fas fa-shopping-cart"></i>Track you order</a></li>
+                        <li name="tab-4" onClick="tabClick(this)"><a><i class="fas fa-map-marker-alt"></i>My address</a></li>
+                        <li><a href="{% url 'userauths:logout' %}"><i class="fas fa-sign-out"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8">
+                <div class="dashboard-content">
+                    <div id="tab-0" class="tab active">
+                        <h3>My Profile</h3>
+                        <hr>
+                        <div class="row" id="profile-content">
+                            <div class="col-lg-4 col-md-12">
+                                <image src="{{profile.image.url}}" class="img-profile">
+                                <h3>{{request.user.username}}</h3>
+                            </div>
+                            <div class="col-lg-8 col-md-12" >
+                               <div class="profile-item">
+                                    <p>Full name:</p>
+                                    {% if profile.full_name is None %}
+                                    <input class="profile-input" type="text" id="full-name" value="Not have">
+                                    {% else %}
+                                    <input class="profile-input" type="text" id="full-name" value="{{profile.full_name}}">
+                                    {% endif %}
+                               </div> 
+                               <div class="profile-item">
+                                    <p>Bio:</p>
+                                    {% if profile.bio is None %}
+                                    <input class="profile-input" type="text" id="bio" value="Not have">
+                                    {% else %}
+                                    <input class="profile-input" type="text" id="bio" value="{{profile.bio}}">
+                                    {% endif %}
+                                </div>
+                               <div class="profile-item">
+                                    <p>Email:</p>
+                                    <input class="profile-input" type="text" id="email" value="{{profile.user.email}}">
+                                </div>
+                                <div class="profile-item">
+                                    <p>Phone:</p>
+                                    {% if profile.phone is None %}
+                                    <input class="profile-input" type="text" id="phone" value="Not have">
+                                    {% else %}
+                                    <input class="profile-input" type="text" id="phone" value="{{profile.phone}}">
+                                    {% endif %}
+                                </div>
+                                <div class="profile-item">
+                                    <p>Image:</p>
+                                    <input type="file" id="img-choice" accept="image/gif, image/png, image/jpeg" onchange="chooseFile(this)"></input>
+                                </div>
+                                <div class="profile-item">
+                                    <p></p>
+                                    <button id="save_profile" onClick="save_profile()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-1" class="tab">
+                        <h3>Hello {{request.user | title}}</h3>
+                        <hr>
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <script>
+                            const ctx = document.getElementById('myChart');
+                            const datas =  {{total_orders | safe}};
+                            const labels = {{month | safe}};
+                            new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                label: 'Orders',
+                                data: datas,
+                                borderWidth: 1,
+                                backgroundColor: '#7fad39'
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                                }
+                            }
+                            });
+                        </script>
+                    </div>
+                    <div id="tab-2" class="tab">
+                        <h3>Your Orders</h3>
+                        <hr>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Orders</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th class="order-title_status">Paid Status</th>
+                                    <th>Total</th>
+                                    <th class="order-title_actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for o in orders %}
+                                <tr>
+                                    <td>INVOICE-NO-{{o.id}}</td>
+                                    <td class="order-date"><span>{{o.order_date | date}}</span></td>
+                                    <td class="order-status"><span>{{o.product_status|title}}</span></td>
+                                    {% if o.paid_status == True %}
+                                        <td class="order-statuspaid"><i class="fas fa-check-circle" style="color: green;"></i></td>
+                                        {% else %}
+                                        <td class="order-statuspaid"><i class="fas fa-times-circle" style="color: red;"></i></td>
+                                    {% endif %}
+                                    
+                                    <td class="order-total"><span>${{o.price}}</span></td>
+                                    <td class="order-action"><a href="{% url 'core:order-detail' o.id %}"><i class="fas fa-eye" style="color: #3fec3f;"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="tab-3" class="tab">tab 3</div>
+                    <div id="tab-4" class="tab">
+                        <div class="address-title">
+                            <h3>Billing Address</h3>
+                            <button data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus"></i>Add Address</button>
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="modal-add-cart" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="modal-add-cart">Add Address</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% comment %} <form action="#" method="post"> {% endcomment %}
+                                            <div class="address-item">
+                                                <p class="top">Display Name<span>*</span></p>
+                                                <input class="address-input" type="text" placeholder="Input display name" id="display-name" name="display-name">
+                                            </div>
+                                            <div class="address-item">
+                                                <p>Phone<span>*</span></p>
+                                                <input class="address-input" type="text" placeholder="Input your phone" id="phone" name="phone">
+                                            </div>
+                                            <div class="address-item">
+                                                <p>Address<span>*</span></p>
+                                                <input class="address-input" type="text" placeholder="Input your address" id="address" name="address">
+                                            </div>
+                                            <div class="address-item">
+                                                <p id="notify-error"></p>
+                                            </div>
+                                        {% comment %} </form> {% endcomment %}
+                                    </div> 
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Back</button>
+                                        <button type="button" class="btn btn-primary" id="add-address">Confirm</button>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="address-main">
+                            {% for address in addresses %}
+                            <div class="address-content">
+                                <div class="address-content-left">
+                                    <p style="color: black;">{{ address.display_name}}</p>
+                                    <p>{{ address.mobile}}</p>
+                                    <p>{{ address.address}}</p>
+                                    {% if address.is_default == True %}
+                                    <button>Default</button>
+                                    {% endif %}
+                                </div>
+                                <div class="address-content-right">
+                                    <a data-toggle="modal" data-target="#exampleModalLong2" data-update="{{address.id}}" onClick="displayDataUpdate(this)">Update</a>
+                                    <button class="address-default" data-address="{{address.id}}" onClick="address_default(this)">Address default</button>
+                                    
+                                    <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="modal-add-cart" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content" id="modal-content-update">
+                                            
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

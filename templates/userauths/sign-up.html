@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class="signup">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-sm-12 col-md-12">
+                <div class="content">
+                    <span class="title">Create an Account</span>
+                    {% if  form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{form.errors}}</strong>
+                        </div>
+                    {% endif %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="item">
+                            <p>Username</p>
+                            {{form.username}}
+                        </div>
+                        <div class="item">
+                            <p>Email</p>
+                            {{form.email}}
+                        </div>
+                        <div class="item">
+                            <p>Password</p>
+                            {{form.password1}}
+                        </div>
+                        <div class="item">
+                            <p>Password Confirmation</p>
+                            {{form.password2}}
+                        </div>
+                        <span>By signing up, you confirm that you've read and accepted our User Notice and Privacy Policy.</span>
+                        <button type="submit">Register</button>
+                    </form>
+                </div> 
+            </div>
+            <div class="col-lg-5 col-sm-12 col-md-12">
+                <div class="content">
+                    <span>Or sign up with</span>
+                    <button class="google">
+                        <img src="{% static 'img/google.png' %}">
+                        <p>Continue with Google</p>
+                    </button>
+                    <button class="facebook">
+                        <img src="{% static 'img/facebook.png' %}">
+                        <p>Continue with Facebook</p>
+                    </button>
+                    <div class="login">
+                        <span>Alreadly have an Account?</span>
+                        <a href="{% url 'userauths:login' %}">Sign in now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+   
+    
+</div>
+{% endblock content %}
+

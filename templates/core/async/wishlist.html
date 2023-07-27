@@ -1,0 +1,59 @@
+<div class="col-lg-12">
+    <p>There are {{wishlists_count}} products in this list.</p>
+</div>
+<div class="col-lg-12">
+    <div class="wishlist">
+        <table>
+            <thead>
+                <tr>
+                    <th><input class="" type="checkbox"></th>
+                    <th  class="image">Image</th>
+                    <th class="product">Product</th>
+                    <th>Price</th>
+                    <th>Stock Status</th>
+                    <th>Active</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wish in wishlists %}
+                <tr>
+                    <td><input class="" type="checkbox"></td>
+                    <td><img src="{{ wish.product.image.url}}" alt="loading..."></td>
+                    <td class="wishlist__item">
+                        <h5>{{ wish.product.title}}</h5>
+                        <div class="featured__item__rate-content">
+                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>(3.5)</span>
+                        </div>
+                    </td>
+                    <td class="wishlist__price">
+                        ${{ wish.product.price}}
+                    </td>
+                    <td class="wishlist__stock">
+                        {% if wish.product.in_stock %}
+                        In stock
+                        {% else %}
+                        Out of stock
+                        {% endif %}
+                        
+                    </td>
+                    <td class="wishlist__active">
+                        <button data-index="{{wish.product.id}}" class="btn-add-cart"><i class="fa fa-shopping-cart"></i>Add cart</button>
+                    </td>
+                    <td class="wishlist__remove">
+                        <button class="delete-product" data-product="{{wish.id}}" onClick="deleteWishList(this)"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if wishlists_count == 0 %}
+        <p>Nothing in this list.</p>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,192 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Product Section Begin -->
+    <section class="product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 filter">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4 data='' value=''>By {{ txt_search }}</h4>
+                            <ul>
+                                <li><a href="#">We found {{ products.count }} item for you!</a></li>
+                            </ul>
+                        </div>
+                        <div class="sidebar__item sidebar__item__color--option view-top">
+                            <h4>By vendor</h4>
+                            {% for vendor in vendors %}
+                            <div class="sidebar__item__vendor">
+                                <label for="{{vendor.title}}">
+                                    <input class="filter-checkbox" type="checkbox" id="{{vendor.title}}" data-filter='vendor' value='{{vendor.id}}'>
+                                    <a href="#">{{vendor.title}}</a>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="sidebar__item view-top">
+                            <h4>By evaluate</h4>
+                            <div class="sidebar__item__evaluate">
+                                <label for="1">
+                                    <input class="filter-checkbox" type="checkbox" id="5" data-filter='evaluate' value='5'>
+                                    <div class="featured__item__rate-content">
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="sidebar__item__evaluate">
+                                <label for="2">
+                                    <input class="filter-checkbox" type="checkbox" id="4" data-filter='evaluate' value='4'>
+                                    <div class="featured__item__rate-content">
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="sidebar__item__evaluate">
+                                <label for="3">
+                                    <input class="filter-checkbox" type="checkbox" id="3" data-filter='evaluate' value='3'>
+                                    <div class="featured__item__rate-content">
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="sidebar__item__evaluate">
+                                <label for="4">
+                                    <input class="filter-checkbox" type="checkbox" id="2" data-filter='evaluate' value='2'>
+                                    <div class="featured__item__rate-content">
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="sidebar__item__evaluate">
+                                <label for="5">
+                                    <input class="filter-checkbox" type="checkbox" id="1" data-filter='evaluate' value='1'>
+                                    <div class="featured__item__rate-content">
+                                        <i class="fa fa-star featured__item__rate--yellow" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="sidebar__item view-top">
+                            <h4>By price</h4>
+                            <div class="price-range-wrap">
+                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                    data-min="{{ min_max_price.price__min | floatformat:0 }}" data-max="{{ min_max_price.price__max | floatformat:0 }}">
+                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                </div>
+                                <div class="range-slider">
+                                    <div class="price-input">
+                                        $<input type="text" id="minamount">
+                                        $<input type="text" id="maxamount">
+                                    </div>
+                                </div>
+                                <div class="range-confirm btn-price" onClick="filterPriceFC()">
+                                    <p>Apply</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-12 product-content">
+                    <div class="hero">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="set-bg banner" data-setbg="{% static 'img/banner/banner.jpg' %}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4">
+                            <div class="section-title">
+                                <h3>Popular Product</h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8">
+                            
+                        </div>
+                    </div>
+                    <div class="row featured__filter" id="filter-product">
+                        {% for product in products %}
+                        <div class="col-lg-4 col-md-4 col-sm-6 mix">
+                            <div class="featured__item">
+                                <div class="featured__item__pic set-bg" data-setbg="{{ product.image.url }}">
+                                    <ul class="featured__item__pic__hover">
+                                        <li><a data-product-item="{{product.id}}" onClick="add_wishlish(this)"><i class="fa fa-heart"></i></a></li> 
+                                        <li><a href="{% url 'core:product-detail' product.pid %}"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="featured__item__text">
+                                    <h6><a href="#">{{ product.title }}</a></h6>
+                                    <div class="featured__item__rate">
+                                        <span>Rate: </span>
+                                        <div class="featured__item__rate-content">
+                                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                            <i class="featured__item__rate--yellow fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <span>(3.5)</span>
+                                        </div>
+                                    </div>
+                                    <div class="featured__item__weight">
+                                        <p>By: </p>
+                                        <p>{{ product.vendor.title}}</p>
+                                    </div>
+                                    <div class="featured__item__price">
+                                        <span>Price: </span>
+                                        <div class="featured__item__price-content">
+                                            <p class="product__details__price-{{product.id}}" value="{{product.price}}" style="color: rgb(6, 120, 82); font-size: 18px;">{{ product.price }}</p>
+                                            <p style="text-decoration:line-through;">{{ product.old_price }}</p>
+                                        </div>
+                                    </div>
+                                    <input type="text" hidden=true value="1" class="product-quantity-{{product.id}}">
+                                    <input type="text" hidden=true value="{{ product.pid }}" class="product-pid-{{product.id}}">
+                                    <input type="text" hidden=true value="{{ product.image.url }}" class="product-image-{{product.id}}">
+                                    <input type="text" hidden=true value="{{ product.id }}" class="product-id-{{product.id}}">
+                                    <input type="text" hidden=true value="{{ product.title }}" class="product-title-{{product.id}}">
+                                    <button data-index="{{ product.id }}" class="btn-add-cart"><i class="fa fa-shopping-cart"></i>Add</button>
+                                </div>
+                                <div class="featured__item__sale">
+                                    <span class="title">Sale</span>
+                                    <span>{{ product.get_precentage }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %} 
+                    </div>
+                    <div class="product__pagination">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+{% endblock content %}
