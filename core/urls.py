@@ -1,5 +1,6 @@
 from django.urls import path, include
 from .views import *
+from .backend import *
 app_name = 'core'
 
 urlpatterns = [
@@ -29,5 +30,19 @@ urlpatterns = [
     path('wishlist/', wishlist_view, name="wishlist"),
     path('save-profile/', save_profile, name="save-profile"),
     path('contact-us/', contact_us, name="contact"),
-    path('delete-wishlist/', delete_wishlist, name="delete-wishlist")
+    path('delete-wishlist/', delete_wishlist, name="delete-wishlist"),
+# --------------------------------------------------------------------------------------------------
+    # API
+    path('api/category/', CategoryAPI.as_view(), name='api-category-list'),
+    path('api/category/<cid>/', CategoryAPI.as_view(), name='api-category'),
+    path('api/vendor/', VendorAPI.as_view(), name='api-vendor-list'),
+    path('api/vendor/<vid>/', VendorAPI.as_view(), name='api-vendor'),
+    path('api/product/', ProductAPI.as_view(), name='api-product-list'),
+    path('api/product/<pid>/', ProductAPI.as_view(), name='api-product'),
+    path('api/add-review/<id>/<pid>/', add_product_review, name='api-add-review'),
+    path('api/get-review/<pid>/', get_product_review, name='api-get-review'),
+    path('api/search/', search, name='api-search'),
+    path('api/filter-category/<cid>/', filter_category, name='api-filter-category'),
+    path('api/cart/<id>/', cart, name='api-cart'),
+    path('api/detail-cart/<oid>/', cart_detail, name='api-detail-cart'),
 ]

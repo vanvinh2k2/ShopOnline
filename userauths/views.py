@@ -3,13 +3,6 @@ from .forms import UserRegisterForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User, Profile
-from .serializers import *
-from django.views.decorators.csrf import csrf_exempt
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, ViewSet
-from rest_framework import status, permissions, generics
 
 # Create your views here.
 def register_view(request):
@@ -61,35 +54,3 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You are logged out.")
     return redirect("userauths:login")
-
-# Api
-
-class register_api(ViewSet, generics.CreateAPIView):
-    queryset = User.objects.all();
-    serializer_class = UserSeriallizes
-
-    def create(self, request):
-        serializer = UserSeriallizes(data=request.data)
-        if not serializer.is_valid():
-            return Response(data={'success': False, 'message': "Create user is valid!"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        user = serializer.save()
-        user.set_password(request.data['password'])
-        Profile.objects.create(user=user)
-        user.save()
-        return Response(data={'success' : True, 'message' : "Add user is successful.", 'data' : serializer.data}, status=status.HTTP_200_OK)
-    
-class login_api(ViewSet, generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = LoginUserSeriallizes
-
-    def create(self, request):
-        serializer = LoginUserSeriallizes(data=request.data)
-        # print(request.data['email'])
-        if not serializer.is_valid():
-            return Response(data={'success': False, 'message': "Create user is valid!"}, status=status.HTTP_400_BAD_REQUEST)
-        else :
-            user = authenticate(request, email=request.data['email'], password=request.data['password'])
-            if user is not None:
-                return Response(data={'success' : True, 'message' : "Get user is successful.", 'data' : serializer.data}, status=status.HTTP_200_OK)
-            else : return Response(data={'success' : False, 'message' : "Get user is fail."}, status=status.HTTP_400_BAD_REQUEST)

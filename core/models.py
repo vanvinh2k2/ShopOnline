@@ -141,7 +141,7 @@ class CartOrderItems(models.Model):
     order = models.ForeignKey(CartOrder, on_delete=models.CASCADE, null = True)
     invoice_no = models.CharField(max_length=200)
     item = models.CharField(max_length=200)
-    image = models.CharField(max_length=200)
+    image = models.ImageField(upload_to=user_directory_path, default="product.png")
     quantity = models.IntegerField(default=0)
     price = models.DecimalField(decimal_places=2, max_digits=50, default=2)
     total = models.DecimalField(decimal_places=2, max_digits=50, default=2)

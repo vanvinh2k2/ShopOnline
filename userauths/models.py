@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    user = models.CharField(max_length=100)
 
     #người dùng sẽ đăng nhập bằng địa chỉ email của họ thay vì tên người dùng.
     USERNAME_FIELD = "email"

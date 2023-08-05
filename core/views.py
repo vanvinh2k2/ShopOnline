@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from taggit.models import Tag
-import uuid
 from django.db.models import Avg, Count
 from django.http import JsonResponse
 from django.contrib import messages
@@ -15,7 +14,6 @@ from django.db.models.functions import ExtractMonth
 
 from django.urls import reverse
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 

@@ -1,17 +1,18 @@
 from django.urls import path, include
-from .views import*
-from rest_framework.routers import DefaultRouter
+from .views import *
+from .backend import *
 
 app_name='userauths'
-router = DefaultRouter()
-router.register('login', login_api)
-router.register('sign-up', register_api)
-
-# router.register('logout/', )
 
 urlpatterns = [
     path('sign-up/', register_view, name="register"),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
-    path('v1/', include(router.urls)),
+
+    # API
+    path('api/sign-up/', RegisterAPI.as_view(), name="api-register"),
+    path('api/login/', LoginAPI.as_view(), name="api-login"),
+    path('api/login/google', GoogleLogin.as_view(), name="api-google"),
+    path('api/login/facebook', FacebookLogin.as_view(), name="api-facebook"),
+    path('api/logout/', Logout.as_view(), name="api-logout"),
 ]

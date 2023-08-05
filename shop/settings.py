@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +45,15 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
     'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +84,15 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
+}
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
@@ -173,3 +191,35 @@ CKEDITOR_CONFIGS = {
     
 PAYPAL_RECEIVER_EMAIL = 'nguoiban123456@gmail.com'
 PAYPAL_TEST = True
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google' : {
+        'APP': {
+            'client_id' : '571607333156-hpqgqfrfmfp2deen1lhtj617ejososc0.apps.googleusercontent.com',
+            'secret' : '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',
+            'key' : '',
+        },
+        'SCOPE': [
+            'profile',
+        ]
+    },
+    'facebook' : {
+        'APP': {
+            'client_id' : '692982425996665',
+            'secret' : '3a498f878fdccb3d98f4ed40e7e2dcd2',
+        }
+    }
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+
+LOGIN_REDIRECT_URL = '/'

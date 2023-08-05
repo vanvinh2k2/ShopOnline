@@ -39,6 +39,7 @@ urlpatterns = [
     path('auth/', include('userauths.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('paypal/', include('paypal.standard.ipn.urls')),
+    path('accounts/', include('allauth.urls')),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
